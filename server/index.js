@@ -1,34 +1,34 @@
-const http = require('http');
+const express = require('express');
 const axios = require('axios');
+const app = express();
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 require('dotenv').config();
 
-const host = '127.0.0.1'
-const port = 3001
+const port = 8080
 
 const config = {
     method: 'get',
     maxBodyLength: Infinity,
-    url: 'https://weatherapi-com.p.rapidapi.com/current.json?q=bangalore',
+    url: 'https://weatherapi-com.p.rapidapi.com/current.json?q=abcd',
     headers: { 
         'X-RapidAPI-Key': process.env.API_KEY
     }
 }
 
-const server = http.createServer((req, res) => {
-    if (req.url === '/') {
-        axios.request(config)
-        .then((response) => {
-            res.statusCode = 200;
-            res.setHeader('Content-Type', 'application/json')
-            console.log(response.data);
-            res.end(JSON.stringify(response.data))
-        })
-        .catch((err) => {
-            console.log(err)
-        })
+app.get('/', async (req, res) => {
+    try {
+        const result = await axios.request(config)
+        res.status(200).json(result.data)
+    } catch (error) {
+        res.status(400).send(error.message)
     }
 })
 
-server.listen(port, host, () => {
-    console.log(`Server running at http://${host}:${port}/`);
-  });
+if(process.env.NODE_ENV !== 'test') {
+    app.listen(port)
+}
+
+module.exports = {
+    app
+}
