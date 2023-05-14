@@ -1,34 +1,64 @@
-const express = require('express');
-const axios = require('axios');
+const express = require("express");
+const cors = require("cors");
+const axios = require("axios");
 const app = express();
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
-require('dotenv').config();
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+require("dotenv").config();
 
-const port = 8080
+const port = 8080;
 
-const config = {
-    method: 'get',
-    maxBodyLength: Infinity,
-    url: 'https://weatherapi-com.p.rapidapi.com/current.json?q=abcd',
-    headers: { 
-        'X-RapidAPI-Key': process.env.API_KEY
-    }
-}
-
-app.get('/', async (req, res) => {
+app.get("/", async (req, res) => {
+  // Get the placename from frontend
+  const { placeName } = req.query;
+  if (placeName.length >= 3) {
     try {
-        const result = await axios.request(config)
-        res.status(200).json(result.data)
+      const result = await axios.request({
+        method: "get",
+        maxBodyLength: Infinity,
+        url: `http://api.weatherapi.com/v1/search.json?key=${process.env.API_KEY}&q=${placeName}`,
+      });
+      res.status(200).json(result.data);
     } catch (error) {
-        res.status(400).send(error.message)
+      res.json({
+        msg: "No matches Found",
+      });
     }
-})
+  } else {
+    res.json({
+      msg: "No matches Found, type atleast 3 character",
+    });
+  }
+});
 
-if(process.env.NODE_ENV !== 'test') {
-    app.listen(port)
+// /weather route
+
+app.get("/weather", async (req, res) => {
+  // Get the placename from frontend
+  const { weatherPlace } = req.query;
+  if (weatherPlace.length === 0)
+    return res
+      .status(400)
+      .json({ errMsg: "please type in a location to see the weather data" });
+  try {
+    const result = await axios.request({
+      method: "get",
+      maxBodyLength: Infinity,
+      url: `http://api.weatherapi.com/v1/current.json?key=${process.env.API_KEY}&q=${weatherPlace}`,
+    });
+    res.json(result.data);
+  } catch (error) {
+    res.json({
+      errMsg: "No matching location found",
+    });
+  }
+});
+
+if (process.env.NODE_ENV !== "test") {
+  app.listen(port);
 }
 
 module.exports = {
-    app
-}
+  app,
+};

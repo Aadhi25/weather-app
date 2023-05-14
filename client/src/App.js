@@ -1,23 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import "./App.css";
+import SearchBar from "./components/SearchBar";
+import { SearchResultsList } from "./components/SearchResultsList";
+import Title from "./components/Title";
+import WeatherData from "./components/WeatherData";
+import { SearchContext } from "./context/SearchContext";
 
 function App() {
+  const [results, setResults] = useState([]);
+  const [show, setShow] = useState(true);
+  const [input, setInput] = useState("");
+  const [weatherData, setWeatherData] = useState(null);
+  const [loading, setLoading] = useState(false);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <SearchContext.Provider
+        value={{
+          results,
+          setResults,
+          show,
+          setShow,
+          input,
+          setInput,
+          weatherData,
+          setWeatherData,
+          loading,
+          setLoading,
+        }}
+      >
+        <Title />
+        <SearchBar />
+        {results && <SearchResultsList />}
+        {weatherData && <WeatherData />}
+      </SearchContext.Provider>
     </div>
   );
 }
