@@ -55,11 +55,9 @@ app.get("/weather", async (req, res) => {
   }
 });
 
-if (process.env.NODE_ENV !== "test") {
-  app.listen(process.env.PORT || 3000, () => {
-    console.log("Server is up and running on" + process.env.PORT);
-  });
-}
+app.listen(process.env.PORT || 3000, () => {
+  console.log("Server is up and running on" + process.env.PORT);
+});
 
 module.exports = {
   app,
