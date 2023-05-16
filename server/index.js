@@ -56,7 +56,7 @@ app.get("/weather", async (req, res) => {
 });
 
 if (process.env.NODE_ENV !== "test") {
-  app.listen(port);
+  app.listen(process.env.PORT || 3000);
 }
 
 module.exports = {
