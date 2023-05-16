@@ -46,7 +46,7 @@ const SearchBar = () => {
       <FaSearchLocation id="search-icon" />
       <input
         type="text"
-        placeholder="Type the location"
+        placeholder="Type atleast 3 letters"
         value={input}
         onChange={(e) => handleOnChange(e.target.value)}
       />
