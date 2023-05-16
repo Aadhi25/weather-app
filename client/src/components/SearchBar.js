@@ -14,7 +14,7 @@ const SearchBar = () => {
     try {
       setLoading(true);
       if (value.length >= 3) {
-        const res = await axios.get("http://localhost:8080/", {
+        const res = await axios.get("https://weatherly-app.onrender.com/", {
           params: {
             placeName: value,
           },

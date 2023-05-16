@@ -12,11 +12,14 @@ export const SearchResult = ({ obj }) => {
   const fetchWeather = async (value) => {
     try {
       setLoading(true);
-      const res = await axios.get("http://localhost:8080/weather/", {
-        params: {
-          weatherPlace: value,
-        },
-      });
+      const res = await axios.get(
+        "https://weatherly-app.onrender.com/weather/",
+        {
+          params: {
+            weatherPlace: value,
+          },
+        }
+      );
       setLoading(false);
       setWeatherData(res.data);
     } catch (error) {
