@@ -6,7 +6,8 @@
   "scripts": {
     "test": "NODE_ENV=test jest  --watchAll",
     "dev": "nodemon index.js",
-    "start": "node index.js"
+    "start": "node index.js",
+    "build": "npm run build"
   },
   "author": "aadhi",
   "license": "ISC",

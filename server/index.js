@@ -7,8 +7,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 require("dotenv").config();
 
-const port = 8080;
-
 app.get("/", async (req, res) => {
   // Get the placename from frontend
   const { placeName } = req.query;
@@ -56,7 +54,7 @@ app.get("/weather", async (req, res) => {
 });
 
 app.listen(process.env.PORT || 3000, () => {
-  console.log("Server is up and running on" + process.env.PORT);
+  console.log("Server is up and running on " + process.env.PORT);
 });
 
 module.exports = {
