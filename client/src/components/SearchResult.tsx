@@ -3,13 +3,21 @@ import axios from "axios";
 import "./SearchResult.css";
 import { SearchContext } from "../context/SearchContext";
 
-export const SearchResult = ({ obj }) => {
+type receivedProps = {
+  obj: {
+    name: string;
+  };
+};
+
+type valueTypes = string | number;
+
+export const SearchResult = ({ obj }: receivedProps) => {
   const { setShow, setInput, setWeatherData, setLoading, loading } =
     useContext(SearchContext);
 
-  const loadingText = "Loading...";
+  const loadingText: string = "Loading...";
 
-  const fetchWeather = async (value) => {
+  const fetchWeather = async (value: valueTypes) => {
     try {
       setLoading(true);
       const res = await axios.get(
@@ -21,6 +29,7 @@ export const SearchResult = ({ obj }) => {
         }
       );
       setLoading(false);
+      console.log(res.data);
       setWeatherData(res.data);
     } catch (error) {
       console.log(error);

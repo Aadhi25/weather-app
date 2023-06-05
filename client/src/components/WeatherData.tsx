@@ -1,8 +1,8 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { SearchContext } from "../context/SearchContext";
 import "./WeatherData.css";
 
-const WeatherData = () => {
+const WeatherData = (): any => {
   const { weatherData, loading } = useContext(SearchContext);
 
   if (!loading) {

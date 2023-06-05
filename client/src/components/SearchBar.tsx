@@ -10,7 +10,7 @@ const SearchBar = () => {
     useContext(SearchContext);
 
   // Call the backend to call the api
-  const fetchPlaces = async (value) => {
+  const fetchPlaces = async (value: string | any[]) => {
     try {
       setLoading(true);
       if (value.length >= 3) {
@@ -25,14 +25,14 @@ const SearchBar = () => {
       } else {
         setResults([]);
       }
-    } catch (error) {
+    } catch (error: any) {
       setResults([]);
       setShow(true);
       console.log(error.msg);
     }
   };
 
-  const handleOnChange = (value) => {
+  const handleOnChange = (value: string) => {
     setInput(value);
     setShow(true);
     debouncedFunc(value);

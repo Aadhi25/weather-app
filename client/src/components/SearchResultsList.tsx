@@ -32,7 +32,7 @@ export const SearchResultsList = () => {
         {show &&
           results.length !== 0 &&
           !loading &&
-          results.map((result) => {
+          results.map((result: { id: number; name: string }) => {
             return <SearchResult obj={result} key={result.id} />;
           })}
       </div>
